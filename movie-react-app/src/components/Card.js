@@ -1,10 +1,12 @@
-import React from "react";
+import React from 'react';
 
 const Card = ({ movie }) => {
   const dateFormater = (date) => {
-    let [yy, mm, dd] = date.split("-");
-    return [dd, mm, yy].join("/");
+    let [yy, mm, dd] = date.split('-');
+    return [dd, mm, yy].join('/');
   };
+
+  let storedData = window.localStorage.movies ? window.localStorage.movies.split(',') : [];
 
   const genreFinder = () => {
     let genreArray = [];
@@ -75,9 +77,7 @@ const Card = ({ movie }) => {
   };
 
   const addStorage = () => {
-    let storedData = window.localStorage.movies
-      ? window.localStorage.movies.split(",")
-      : [];
+    let storedData = window.localStorage.movies ? window.localStorage.movies.split(',') : [];
 
     if (!storedData.includes(movie.id.toString())) {
       storedData.push(movie.id);
@@ -86,44 +86,28 @@ const Card = ({ movie }) => {
   };
 
   const deleteStorage = () => {
-    let storedData = window.localStorage.movies.split(",");
-
-    let newData = storedData.filter((id) => id !== movie.id);
-
+    let storedData = window.localStorage.movies.split(',');
+    let newData = storedData.filter((id) => id !== movie.id.toString());
     window.localStorage.movies = newData;
   };
 
   return (
     <div className="card">
       <img
-        src={
-          movie.poster_path
-            ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
-            : "./img/poster.jpg"
-        }
+        src={movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : './img/poster.jpg'}
         alt="affiche film"
       />
       <h2>{movie.title}</h2>
-      {movie.release_date ? (
-        <h5>Sorti le : {dateFormater(movie.release_date)}</h5>
-      ) : (
-        ""
-      )}
+      {movie.release_date ? <h5>Sorti le : {dateFormater(movie.release_date)}</h5> : ''}
       <h4>
         {movie.vote_average}/10 <span>⭐</span>
       </h4>
 
-      <ul>
-        {movie.genre_ids
-          ? genreFinder()
-          : movie.genres.map((genre, index) => (
-              <li key={index}>{genre.name}</li>
-            ))}
-      </ul>
-      {movie.overview ? <h3>Synopsis</h3> : ""}
+      <ul>{movie.genre_ids ? genreFinder() : movie.genres.map((genre, index) => <li key={index}>{genre.name}</li>)}</ul>
+      {movie.overview ? <h3>Synopsis</h3> : ''}
       <p>{movie.overview}</p>
 
-      {movie.genre_ids ? (
+      {!storedData.includes(movie.id.toString()) ? (
         <div className="btn" onClick={() => addStorage()}>
           Ajouter aux coups de coeur
         </div>
@@ -133,8 +117,7 @@ const Card = ({ movie }) => {
           onClick={() => {
             deleteStorage();
             window.location.reload();
-          }}
-        >
+          }}>
           Supprimer de la liste
         </div>
       )}
