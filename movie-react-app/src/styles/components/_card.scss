@@ -9,9 +9,17 @@
   padding: 26px 15px 30px;
   position: relative;
   overflow: hidden;
-
+  .green {
+    color: rgb(0, 98, 0);
+  }
+  .orange {
+    color: rgb(191, 124, 0);
+  }
+  .red {
+    color: rgb(204, 0, 0);
+  }
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     height: 90px;
     width: 100%;
@@ -30,8 +38,7 @@
     display: block;
     margin: 0 auto;
     border-radius: 50px;
-    box-shadow: 0 8px 1px rgba(255, 255, 255, 0.1),
-      0 16px 1px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 1px rgba(255, 255, 255, 0.1), 0 16px 1px rgba(255, 255, 255, 0.05);
   }
   h2 {
     margin: 24px 0 0px;
@@ -107,7 +114,6 @@
     }
     &:active {
       transform: scale(1.05) translateX(-50%);
-      
     }
   }
 }
